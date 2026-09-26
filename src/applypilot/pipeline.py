@@ -60,8 +60,8 @@ _UPSTREAM: dict[str, str | None] = {
 # ---------------------------------------------------------------------------
 
 def _run_discover(workers: int = 1) -> dict:
-    """Stage: Job discovery — JobSpy, Workday, and smart-extract scrapers."""
-    stats: dict = {"jobspy": None, "workday": None, "smartextract": None}
+    """Stage: Job discovery — JobSpy, Workday, smart-extract, and Rozee.pk scrapers."""
+    stats: dict = {"jobspy": None, "workday": None, "smartextract": None, "rozee": None}
 
     # JobSpy
     console.print("  [cyan]JobSpy full crawl...[/cyan]")
@@ -75,29 +75,39 @@ def _run_discover(workers: int = 1) -> dict:
         stats["jobspy"] = f"error: {e}"
 
     # Workday corporate scraper
-    console.print("  [cyan]Workday corporate scraper...[/cyan]")
-    try:
-        from applypilot.discovery.workday import run_workday_discovery
-        run_workday_discovery(workers=workers)
-        stats["workday"] = "ok"
-    except Exception as e:
-        log.error("Workday scraper failed: %s", e)
-        console.print(f"  [red]Workday error:[/red] {e}")
-        stats["workday"] = f"error: {e}"
+    #console.print("  [cyan]Workday corporate scraper...[/cyan]")
+    #try:
+     #   from applypilot.discovery.workday import run_workday_discovery
+      #  run_workday_discovery(workers=workers)
+       # stats["workday"] = "ok"
+    #except Exception as e:
+     #   log.error("Workday scraper failed: %s", e)
+      #  console.print(f"  [red]Workday error:[/red] {e}")
+       # stats["workday"] = f"error: {e}"
 
     # Smart extract
-    console.print("  [cyan]Smart extract (AI-powered scraping)...[/cyan]")
+    #console.print("  [cyan]Smart extract (AI-powered scraping)...[/cyan]")
+    #try:
+     #   from applypilot.discovery.smartextract import run_smart_extract
+      #  run_smart_extract(workers=workers)
+       # stats["smartextract"] = "ok"
+    #except Exception as e:
+     #   log.error("Smart extract failed: %s", e)
+      #  console.print(f"  [red]Smart extract error:[/red] {e}")
+       # stats["smartextract"] = f"error: {e}"
+
+    # Rozee.pk — Pakistan job board
+    console.print("  [cyan]Rozee.pk scraper...[/cyan]")
     try:
-        from applypilot.discovery.smartextract import run_smart_extract
-        run_smart_extract(workers=workers)
-        stats["smartextract"] = "ok"
+        from applypilot.discovery.rozee import run_rozee_discovery
+        run_rozee_discovery()
+        stats["rozee"] = "ok"
     except Exception as e:
-        log.error("Smart extract failed: %s", e)
-        console.print(f"  [red]Smart extract error:[/red] {e}")
-        stats["smartextract"] = f"error: {e}"
+        log.error("Rozee scraper failed: %s", e)
+        console.print(f"  [red]Rozee error:[/red] {e}")
+        stats["rozee"] = f"error: {e}"
 
     return stats
-
 
 def _run_enrich(workers: int = 1) -> dict:
     """Stage: Detail enrichment — scrape full descriptions and apply URLs."""
