@@ -185,6 +185,17 @@ applypilot dashboard                    # Open HTML results dashboard
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for development setup, coding standards, and PR guidelines.
+## Pakistan Job Market Support (Rozee.pk)
+
+This fork adds support for [Rozee.pk](https://rozee.pk) — Pakistan's largest job board.
+
+### What's added
+- `src/applypilot/discovery/rozee.py` — Playwright-based scraper with stealth mode
+- Integrated into the main discovery pipeline
+- Supports major Pakistani cities: Karachi, Lahore, Islamabad, Rawalpindi, Peshawar
+
+### Usage
+The Rozee.pk scraper runs automatically as part of `applypilot run discover`.
 
 ---
 
